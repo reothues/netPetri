@@ -1,6 +1,7 @@
 import {Connectivity} from './connect';
+import {Subject} from 'node_modules/rxjs/Subject';
 import {Place} from './place';
-export class map {
+export class Map {
   columns: Array<Array<Place>>;
   constructor (private petri: Connectivity){
     let columns = [];
@@ -55,10 +56,12 @@ export class map {
         })
       })
     });
-
-    this.petri.transitions.forEach(t => {
+    let elTrans : Array<DElement> = new Array(this.petri.transitions.length);
+    this.petri.transitions.forEach((t, iTrans) => {
       let pointFrom = {x: 0, y: 0}
         , pointTo = {x: 0, y: 0};
+      let curveFrom : Array<Array<{x: number, y: number}>> = new Array(t.from.length)
+        , curveTo : Array<Array<{x: number, y: number}>> = new Array(t.to.length);
       t.from.forEach((p, i, arr) => {
         let index = this.petri.places.indexOf(p);
         let elPlace = arrElPlace[index];
@@ -66,6 +69,7 @@ export class map {
         let {x, y} = elFrom.find('trans')[p.to.indexOf(t)].center;
         pointFrom.x += x / arr.length;
         pointFrom.y += y / arr.length;
+        curveFrom[i] = [{x: x, y: y}, {x: x, y: y + 1}]
       });
       t.to.forEach((p, i, arr) => {
         let index = this.petri.places.indexOf(p);
@@ -74,12 +78,16 @@ export class map {
         let {x, y} = elTo.find('trans')[p.from.indexOf(t)].center;
         pointTo.x += x / arr.length;
         pointTo.y += y / arr.length;
+        curveTo[i] = [{x: x, y: y - 1}, {x: x, y: y}];
       });
       let elTransition = elRoot.createElement('sition');
       elTransition.left = pointFrom.x;
       elTransition.right = pointTo.x;
       elTransition.top = pointFrom.y;
       elTransition.bottom = pointTo.y;
+      elTransition.attributes.curveFrom = curveFrom;
+      elTransition.attributes.curveTo = curveTo;
+      elTrans[iTrans] = elTransition;
     })
     return elRoot;
   }
@@ -137,6 +145,13 @@ export class DElement extends Shape {
   attributes: any = {};
   childNodes: Array<DElement>;
   parentNode?: DElement;
+  onpaint: Subject<DElement> = Subject.create();
+  paint(): void{
+    this.onpaint.next(this);
+    this.childNodes.forEach(e => {
+      e.paint();
+    })
+  }
   find(n: string) : Array<DElement> {
     return this.childNodes.filter(a => a.nodeName === n);
   }

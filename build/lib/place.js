@@ -48,6 +48,15 @@ export class Transition extends PetriNode {
     }
 }
 export class Petri {
+    constructor(p) {
+        // super();
+        if (p) {
+            this.addPlace(p);
+        }
+        else {
+            this.addPlace(new Place('default'));
+        }
+    }
     get stayPlace() {
         return this.places[this.stayAt];
     }

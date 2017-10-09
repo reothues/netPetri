@@ -15,6 +15,7 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-typescript": "^3.2.2",
+    "systemjs": "^0.20.19",
     "typescript": "^2.5.2"
   },
   "dependencies": {

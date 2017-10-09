@@ -1,9 +1,4 @@
 import { Place, Petri } from './place';
-class chinese {
-    constructor() {
-        this.name = "wu";
-    }
-}
 export class Connectivity extends Petri {
     constructor() {
         super();
