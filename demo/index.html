@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <title>My plants</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../../node_modules/systemjs/dist/system.src.js"></script>
+    <script src="./systemjs.config.js"></script>
+      <style>
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        list-style: none;
+
+        }
+
+@font-face {
+  font-family: 'Noto Color Emoji';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/font/NotoColorEmoji.eot);
+  src: url(/font/NotoColorEmoji.ttf) format('truetype'),
+       url(/font/NotoColorEmoji.eot?#iefix) format('embedded-opentype'),
+       url(/font/NotoColorEmoji.woff2) format('woff2'),
+       url(/font/NotoColorEmoji.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Noto Emoji';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/font/NotoEmoji.eot);
+  src: url(/font/NotoEmoji.ttf) format('truetype'),
+       url(/font/NotoEmoji.woff2) format('woff2'),
+       url(/font/NotoEmoji.woff) format('woff'),
+       url(/font/NotoEmoji.eot?#iefix) format('embedded-opentype');
+}
+      </style>
+    <script>
+    // window.onerror = function(evt) {
+    //     var xhr = new XMLHttpRequest();
+
+    //     xhr.open('post', '/error', true);
+
+    //     xhr.onprogress = function () {
+    //     };
+
+    //     xhr.onload = function () {
+    //       console.log('4 DONE', xhr.statusText);
+    //     };
+
+    //     xhr.send(evt);
+    // }
+
+      System.import('app')
+      //.catch(function (err) { window.onerror(err); });
+    </script>
+  </head>
+  <body>
+    <zoic>Loading...</zoic>
+  </body>
+    <!-- <script src="build/bundle/main.js"></script> -->
+
+</html>
