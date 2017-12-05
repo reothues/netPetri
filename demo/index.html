@@ -3,7 +3,7 @@
     <title>My plants</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="../../node_modules/systemjs/dist/system.src.js"></script>
+    <script src="../node_modules/systemjs/dist/system.src.js"></script>
     <script src="./systemjs.config.js"></script>
       <style>
         html, body, div, span, applet, object, iframe,
@@ -28,51 +28,28 @@
         list-style: none;
 
         }
-
-@font-face {
-  font-family: 'Noto Color Emoji';
-  font-style: normal;
-  font-weight: 400;
-  src: url(/font/NotoColorEmoji.eot);
-  src: url(/font/NotoColorEmoji.ttf) format('truetype'),
-       url(/font/NotoColorEmoji.eot?#iefix) format('embedded-opentype'),
-       url(/font/NotoColorEmoji.woff2) format('woff2'),
-       url(/font/NotoColorEmoji.woff) format('woff');
-}
-
-@font-face {
-  font-family: 'Noto Emoji';
-  font-style: normal;
-  font-weight: 400;
-  src: url(/font/NotoEmoji.eot);
-  src: url(/font/NotoEmoji.ttf) format('truetype'),
-       url(/font/NotoEmoji.woff2) format('woff2'),
-       url(/font/NotoEmoji.woff) format('woff'),
-       url(/font/NotoEmoji.eot?#iefix) format('embedded-opentype');
-}
       </style>
+<style>
+  #post {
+    width: 100%;
+    height: 100%;
+    background: #eff;
+  }
+  .pr{
+    position: relative;
+  }
+</style>
     <script>
-    // window.onerror = function(evt) {
-    //     var xhr = new XMLHttpRequest();
-
-    //     xhr.open('post', '/error', true);
-
-    //     xhr.onprogress = function () {
-    //     };
-
-    //     xhr.onload = function () {
-    //       console.log('4 DONE', xhr.statusText);
-    //     };
-
-    //     xhr.send(evt);
-    // }
-
       System.import('app')
-      //.catch(function (err) { window.onerror(err); });
     </script>
   </head>
   <body>
-    <zoic>Loading...</zoic>
+    <form id="createLocation">
+      <input id="id" type="hidden" name="id">
+    </form>
+    <div class="pr">
+      <canvas id="post"/>
+    </div>
   </body>
     <!-- <script src="build/bundle/main.js"></script> -->
 

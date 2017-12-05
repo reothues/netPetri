@@ -1,13 +1,31 @@
 import { Place, Petri } from './place';
+function swapArray(a, x, y) {
+    a[x] = a.splice(y, 1, a[x])[0];
+}
 export class Connectivity extends Petri {
-    constructor() {
-        super();
-        this.walk(this.startPlace);
-        this.places.forEach((p, i) => {
-            if (this.sets.indexOf(p) == -1) {
-                this.disasociats[i] == true;
-            }
-        });
+    constructor(p) {
+        if (p instanceof Petri) {
+            super();
+            this.places = p.places;
+            this.transitions = p.transitions;
+            this.startAt = p.startAt;
+        }
+        else {
+            super(p);
+        }
+        this.reset();
+        this.walk();
+    }
+    reset() {
+        this.depth = new Array(this.places.length).fill(-1);
+        this.sets = new Array(this.places.length);
+        this.deadEnds = new Array(this.places.length).fill(true);
+        this.disasociats = new Array(this.places.length).fill(true);
+    }
+    addPlace(p) {
+        let index = super.addPlace(p);
+        this.reset();
+        return index;
     }
     clone(p) {
         let ret = new Place(p.name + 'clone');
@@ -20,12 +38,45 @@ export class Connectivity extends Petri {
         this.addPlace(ret);
         return ret;
     }
+    swapPlace(a0, a1) {
+        let i0, i1;
+        if (a0 instanceof Place && this.places.indexOf(a0) != -1) {
+            i0 = this.places.indexOf(a0);
+        }
+        else if (Number.isInteger(a0) && this.places[a0]) {
+            i0 = a0;
+        }
+        else {
+            return;
+        }
+        if (a1 instanceof Place && this.places.indexOf(a1) != -1) {
+            i1 = this.places.indexOf(a1);
+        }
+        else if (Number.isInteger(a1) && this.places[a1]) {
+            i1 = a1;
+        }
+        else {
+            return;
+        }
+        swapArray(this.places, i0, i1);
+        swapArray(this.depth, i0, i1);
+        swapArray(this.disasociats, i0, i1);
+        swapArray(this.deadEnds, i0, i1);
+    }
     removePlace(p) {
         let i = super.removePlace(p);
         this.depth.splice(i, 1);
         this.disasociats.splice(i, 1);
         this.deadEnds.splice(i, 1);
         return i;
+    }
+    static fromNet(net) {
+        return;
+    }
+    static unserialize(str) {
+        let petri = super.unserialize(str);
+        let ret = new Connectivity(petri);
+        return ret;
     }
     merge(arr) {
         let ret = new Place('merge');
@@ -43,11 +94,22 @@ export class Connectivity extends Petri {
         return ret;
     }
     walk(p, i = 0) {
+        if (!p) {
+            if (!this.startPlace)
+                return;
+            p = this.startPlace;
+            this.disasociats.fill(true);
+            this.depth.fill(-1);
+        }
+        if (i === 0) {
+            this.sets = [];
+        }
         if (this.isLoop(p)) {
             return;
         }
         let index = this.places.indexOf(p);
         this.depth[index] = i;
+        this.disasociats[index] = false;
         this.sets.push(p);
         let isDeadend = true;
         p.to.forEach(t => {
@@ -62,3 +124,4 @@ export class Connectivity extends Petri {
         return this.sets.indexOf(p) !== -1;
     }
 }
+//# sourceMappingURL=connect.js.map

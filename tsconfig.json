@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
         "outDir": "./build/",
-        "sourceMap": false,
+        "sourceMap": true,
         "noImplicitAny": false,
         "module": "es2015",
-        "target": "es2015"
+        "target": "es2015",
+        "moduleResolution": "node"
     },
     "include": [
         "src/**/*"
